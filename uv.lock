@@ -875,6 +875,7 @@ name = "streamlit-demo"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
+    { name = "pandas" },
     { name = "pymysql" },
     { name = "st" },
     { name = "streamlit" },
@@ -882,6 +883,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
+    { name = "pandas", specifier = ">=3.0.5" },
     { name = "pymysql", specifier = ">=1.2.0" },
     { name = "st", specifier = ">=0.0.8" },
     { name = "streamlit", specifier = ">=1.62.0" },

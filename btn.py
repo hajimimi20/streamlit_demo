@@ -1,15 +1,12 @@
 import streamlit as st
 import pymysql
+import pandas as pd
 
 
-def show_main_screen():
-    st.subheader("Login successful!")
-    st.write("Welcome to the main screen.")
 
+def get_connection():
 
-def check_user(username, password):
-
-    connection = pymysql.connect(
+    return pymysql.connect(
         host="localhost",
         user="root",
         password="1234",
@@ -17,6 +14,9 @@ def check_user(username, password):
         charset="utf8mb4"
     )
 
+def check_user(username, password):
+
+    connection = get_connection()
     cursor = connection.cursor()
 
     sql = """
@@ -27,7 +27,6 @@ def check_user(username, password):
     """
 
     cursor.execute(sql, (username, password))
-
     result = cursor.fetchone()
 
     cursor.close()
@@ -36,21 +35,43 @@ def check_user(username, password):
     return result is not None
 
 
-st.title("Streamlit Login")
+def show_main_screen():
+
+    st.subheader("Welcome to the Main Screen")
+
+    connection = get_connection()
+
+    sql = """
+        SELECT id, username
+        FROM users
+    """
+
+    df = pd.read_sql(sql, connection)
+
+    connection.close()
+
+    st.subheader("Users")
+    st.dataframe(df, use_container_width=True)
+
+
+st.title("Streamlit Login System")
 
 username = st.text_input("Username")
 
-password = st.text_input("Password",type="password")
+password = st.text_input(
+    "Password",
+    type="password"
+)
+
 
 if st.button("Login", type="primary"):
 
     if check_user(username, password):
-        st.success("Login successfully!")
+
+        st.success("Login successful!")
+
         show_main_screen()
 
     else:
+
         st.error("Invalid username or password")
-
-
-if st.button("Cancel", type="secondary"):
-    st.write("Login cancelled.")
