@@ -1,13 +1,51 @@
 import streamlit as st
 
-st.title("Welcome to my first Streamlit web")
+# Page title
+st.title("Welcome to My First Streamlit Web")
 
-st.write("Hello Streamlit!")
+st.write("Hello, Streamlit!")
 
-name = st.text_input("Insert your name:")
+# Name input
+name = st.text_input("Enter your name:")
 
 if name:
-    st.write(f"Hi，{name}！")
+    st.write(f"Hi, {name}!")
 
 
-st.chat_input("Ask a question...")
+# -------------------------
+# Sidebar Menu
+# -------------------------
+
+st.sidebar.title("Menu")
+
+menu = st.sidebar.radio(
+    "",
+    ["Home", "About", "Contact"]
+)
+
+
+# -------------------------
+# Page Content
+# -------------------------
+
+if menu == "Home":
+    st.header("Home")
+    st.write("Welcome to the Home page!")
+
+elif menu == "About":
+    st.header("About")
+    st.write("This is my first Streamlit web application.")
+    st.write("I am learning Python, SQL, and Streamlit.")
+
+elif menu == "Contact":
+    st.header("Contact")
+    st.write("You can contact me at:")
+    st.write("hajimidb@gmail.com")
+
+
+# -------------------------
+# Footer
+# -------------------------
+
+st.markdown("---")
+st.caption("© 2026 My Streamlit App")
